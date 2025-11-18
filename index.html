@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NOPE.</title>
+  <script src="/telegram-web-app.js"></script>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; padding: 20px; max-width: 500px; margin: 0 auto; background: white; color: black; }
+    h1 { font-size: 24px; margin-bottom: 16px; }
+    p { line-height: 1.5; margin-bottom: 20px; }
+    .btn { background: black; color: white; border: none; padding: 12px 20px; width: 100%; border-radius: 8px; font-size: 16px; margin-top: 10px; }
+    .card { border: 1px solid #eee; border-radius: 12px; padding: 16px; margin-bottom: 12px; cursor: pointer; }
+    .card h3 { margin: 0 0 8px; }
+    .card p { margin: 0; font-size: 14px; color: #666; }
+  </style>
+</head>
+<body>
+  <h1>NOPE, bukan gue banget…</h1>
+  <p>Kalau lo sering mikir:  
+  “Nggak, ini beneran bukan gue banget…”  
+  — lo nggak sendiri.</p>
+  
+  <div id="onboarding">
+    <p><strong>Pilih 1 hal yang bikin lo NOPE:</strong></p>
+    
+    <div class="card" onclick="selectZone('pop')">
+      <h3>🎬 Film/Series Gaje</h3>
+      <p>Buat yang nyesek liat ending dipaksain, plot bolong, atau seleb cari validasi terus.</p>
+    </div>
+    <div class="card" onclick="selectZone('lifestyle')">
+      <h3>💸 Sok Kaya, Kantong Kempes</h3>
+      <p>Buat yang gemes liat orang pamer branded, padahol pinjol, atau jadi cadangan terus.</p>
+    </div>
+    <div class="card" onclick="selectZone('academic')">
+      <h3>📚 Kampus/Kelas Nggak Waras</h3>
+      <p>Buat yang sebel sama kuis dadakan, kerja kelompok hantu, atau dosen ngelantur 2 jam.</p>
+    </div>
+    <div class="card" onclick="selectZone('career')">
+      <h3>💼 Masa Depan? Ngeri.</h3>
+      <p>Buat yang galau karena magang nggak dibayar, CV ditolak terus, atau jurusan nggak jelas arahnya.</p>
+    </div>
+  </div>
+
+  <script>
+    function selectZone(zone) {
+      // Simpan sementara (di MVP sebenarnya, ini akan dikirim ke Firebase)
+      alert("Lo pilih zona: " + zone + "\n\nDi MVP asli, lo akan lanjut pilih hashtag & masuk Squad otomatis.");
+      
+      // Tutup Mini App setelah 3 detik
+      setTimeout(() => {
+        if (window.Telegram?.WebApp) {
+          window.Telegram.WebApp.close();
+        }
+      }, 3000);
+    }
+  </script>
+</body>
+</html>
