@@ -1,59 +1,464 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>NOPE.</title>
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
-  <style>
-    body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; padding: 20px; max-width: 500px; margin: 0 auto; background: white; color: black; }
-    h1 { font-size: 24px; margin-bottom: 16px; }
-    p { line-height: 1.5; margin-bottom: 20px; }
-    .btn { background: black; color: white; border: none; padding: 12px 20px; width: 100%; border-radius: 8px; font-size: 16px; margin-top: 10px; }
-    .card { border: 1px solid #eee; border-radius: 12px; padding: 16px; margin-bottom: 12px; cursor: pointer; }
-    .card h3 { margin: 0 0 8px; }
-    .card p { margin: 0; font-size: 14px; color: #666; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NOPE. - Fuck Ordinary</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        /* Custom Cursor */
+        .cursor {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ff0055;
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.1s ease;
+            mix-blend-mode: difference;
+        }
+
+        .cursor-follower {
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgba(255, 0, 85, 0.3);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9998;
+            transition: all 0.3s ease;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glitch-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(45deg, transparent 30%, rgba(255, 0, 85, 0.05) 50%, transparent 70%),
+                radial-gradient(circle at 20% 50%, rgba(138, 43, 226, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 50%, rgba(0, 255, 255, 0.1) 0%, transparent 50%);
+            animation: bgShift 10s ease infinite;
+        }
+
+        @keyframes bgShift {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(-5%, 5%) scale(1.05); }
+            66% { transform: translate(5%, -5%) scale(0.95); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: clamp(4rem, 15vw, 12rem);
+            font-weight: 900;
+            letter-spacing: -0.05em;
+            margin-bottom: 1rem;
+            position: relative;
+            animation: glitchText 5s infinite;
+        }
+
+        h1::before,
+        h1::after {
+            content: 'NOPE.';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        h1::before {
+            color: #ff0055;
+            animation: glitch1 3s infinite;
+            clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+        }
+
+        h1::after {
+            color: #00ffff;
+            animation: glitch2 3s infinite;
+            clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+        }
+
+        @keyframes glitch1 {
+            0%, 100% { transform: translate(0); }
+            20% { transform: translate(-3px, 3px); }
+            40% { transform: translate(-3px, -3px); }
+            60% { transform: translate(3px, 3px); }
+            80% { transform: translate(3px, -3px); }
+        }
+
+        @keyframes glitch2 {
+            0%, 100% { transform: translate(0); }
+            20% { transform: translate(3px, -3px); }
+            40% { transform: translate(3px, 3px); }
+            60% { transform: translate(-3px, -3px); }
+            80% { transform: translate(-3px, 3px); }
+        }
+
+        .tagline {
+            font-size: clamp(1.2rem, 3vw, 2rem);
+            color: #888;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            margin-bottom: 3rem;
+            animation: fadeInUp 1s ease 0.5s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1.5rem 4rem;
+            background: transparent;
+            border: 2px solid #ff0055;
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            animation: fadeInUp 1s ease 1s both;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: #ff0055;
+            transition: left 0.5s ease;
+            z-index: -1;
+        }
+
+        .cta-button:hover {
+            color: #000;
+            border-color: #ff0055;
+            transform: scale(1.05);
+        }
+
+        .cta-button:hover::before {
+            left: 0;
+        }
+
+        /* Scroll Indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            animation: fadeInUp 1s ease 1.5s both;
+        }
+
+        .scroll-text {
+            font-size: 0.8rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: #666;
+        }
+
+        .scroll-line {
+            width: 2px;
+            height: 50px;
+            background: linear-gradient(to bottom, #ff0055, transparent);
+            animation: scrollAnim 2s ease infinite;
+        }
+
+        @keyframes scrollAnim {
+            0%, 100% { transform: translateY(0); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(20px); opacity: 0; }
+        }
+
+        /* Features Section */
+        .features {
+            min-height: 100vh;
+            padding: 5rem 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            padding: 3rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 0, 85, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            border-color: #ff0055;
+            box-shadow: 0 20px 60px rgba(255, 0, 85, 0.3);
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .feature-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .feature-card p {
+            color: #999;
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            padding: 2rem;
+        }
+
+        .cta-content {
+            text-align: center;
+            max-width: 800px;
+        }
+
+        .cta-content h2 {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 900;
+            margin-bottom: 2rem;
+            line-height: 1.2;
+        }
+
+        .cta-content p {
+            font-size: 1.5rem;
+            color: #888;
+            margin-bottom: 3rem;
+            line-height: 1.6;
+        }
+
+        /* Noise Effect */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.03;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .features {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 4rem;
+            }
+        }
+    </style>
 </head>
 <body>
-  <h1>NOPE, bukan gue banget…</h1>
-  <p>Kalau lo sering mikir:  
-  “Nggak, ini beneran bukan gue banget…”  
-  — lo nggak sendiri.</p>
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
 
-  <div id="onboarding">
-    <p><strong>Pilih 1 hal yang bikin lo NOPE:</strong></p>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="glitch-bg"></div>
+        <div class="hero-content">
+            <h1>NOPE.</h1>
+            <p class="tagline">Fuck Ordinary</p>
+            <a href="#features" class="cta-button">Explore</a>
+        </div>
+        <div class="scroll-indicator">
+            <span class="scroll-text">Scroll</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
 
-    <div class="card" onclick="selectZone('pop')">
-      <h3>🎬 Film/Series Gaje</h3>
-      <p>Buat yang nyesek liat ending dipaksain, plot bolong, atau seleb cari validasi terus.</p>
-    </div>
-    <div class="card" onclick="selectZone('lifestyle')">
-      <h3>💸 Sok Kaya, Kantong Kempes</h3>
-      <p>Buat yang gemes liat orang pamer branded, padahol pinjol, atau jadi cadangan terus.</p>
-    </div>
-    <div class="card" onclick="selectZone('academic')">
-      <h3>📚 Kampus/Kelas Nggak Waras</h3>
-      <p>Buat yang sebel sama kuis dadakan, kerja kelompok hantu, atau dosen ngelantur 2 jam.</p>
-    </div>
-    <div class="card" onclick="selectZone('career')">
-      <h3>💼 Masa Depan? Ngeri.</h3>
-      <p>Buat yang galau karena magang nggak dibayar, CV ditolak terus, atau jurusan nggak jelas arahnya.</p>
-    </div>
-  </div>
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="feature-card">
+            <span class="feature-icon">🔥</span>
+            <h3>No Bullshit</h3>
+            <p>We don't do vanilla. We don't do safe. We create experiences that make people stop and say "what the fuck?"</p>
+        </div>
+        <div class="feature-card">
+            <span class="feature-icon">⚡</span>
+            <h3>Pure Energy</h3>
+            <p>Fast, aggressive, unapologetic. We move at the speed of chaos and deliver results that hit different.</p>
+        </div>
+        <div class="feature-card">
+            <span class="feature-icon">💀</span>
+            <h3>Kill Comfort</h3>
+            <p>Comfort zones are where dreams go to die. We push boundaries until they break, then push some more.</p>
+        </div>
+        <div class="feature-card">
+            <span class="feature-icon">🎯</span>
+            <h3>Zero Compromise</h3>
+            <p>Perfect is boring. We aim for impossible and land somewhere between legendary and insane.</p>
+        </div>
+        <div class="feature-card">
+            <span class="feature-icon">🌪️</span>
+            <h3>Chaos Theory</h3>
+            <p>Order is for algorithms. We thrive in the beautiful mess where creativity meets destruction.</p>
+        </div>
+        <div class="feature-card">
+            <span class="feature-icon">👁️</span>
+            <h3>See Different</h3>
+            <p>Everyone sees the same shit. We see opportunities in the glitches, beauty in the broken.</p>
+        </div>
+    </section>
 
-  <script>
-    function selectZone(zone) {
-      // Simpan sementara (di MVP sebenarnya ini dikirim ke Firebase)
-      alert("Lo pilih zona: " + zone + "\n\nDi MVP asli, lo akan lanjut pilih hashtag & masuk Squad otomatis.");
-      
-      // Tutup Mini App setelah 3 detik
-      setTimeout(() => {
-        if (window.Telegram?.WebApp) {
-          window.Telegram.WebApp.close();
-        }
-      }, 3000);
-    }
-  </script>
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-content">
+            <h2>Ready to say NOPE to ordinary?</h2>
+            <p>Join the rebellion. Embrace the chaos. Be unforgettable.</p>
+            <a href="#" class="cta-button">Let's fucking go</a>
+        </div>
+    </section>
+
+    <script>
+        // Custom Cursor
+        const cursor = document.querySelector('.cursor');
+        const follower = document.querySelector('.cursor-follower');
+
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            
+            setTimeout(() => {
+                follower.style.left = e.clientX + 'px';
+                follower.style.top = e.clientY + 'px';
+            }, 100);
+        });
+
+        // Hover effects for links
+        const links = document.querySelectorAll('a, .feature-card');
+        links.forEach(link => {
+            link.addEventListener('mouseenter', () => {
+                cursor.style.transform = 'scale(1.5)';
+                cursor.style.borderColor = '#00ffff';
+            });
+            link.addEventListener('mouseleave', () => {
+                cursor.style.transform = 'scale(1)';
+                cursor.style.borderColor = '#ff0055';
+            });
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Parallax effect for feature cards
+        window.addEventListener('scroll', () => {
+            const cards = document.querySelectorAll('.feature-card');
+            cards.forEach((card, index) => {
+                const rect = card.getBoundingClientRect();
+                const scrollPercent = (window.innerHeight - rect.top) / window.innerHeight;
+                if (scrollPercent > 0 && scrollPercent < 1) {
+                    card.style.opacity = scrollPercent;
+                    card.style.transform = `translateY(${(1 - scrollPercent) * 50}px)`;
+                }
+            });
+        });
+
+        // Random glitch effect
+        setInterval(() => {
+            if (Math.random() > 0.95) {
+                document.querySelector('h1').style.animation = 'none';
+                setTimeout(() => {
+                    document.querySelector('h1').style.animation = 'glitchText 5s infinite';
+                }, 50);
+            }
+        }, 3000);
+    </script>
 </body>
 </html>
