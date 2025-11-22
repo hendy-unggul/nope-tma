@@ -297,6 +297,99 @@
                 font-size: 4rem;
             }
         }
+
+        /* Form Styles */
+        .form-container {
+            margin-top: 3rem;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        .form-box {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(139, 0, 0, 0.3);
+            padding: 3rem;
+            max-width: 500px;
+            margin: 0 auto;
+            backdrop-filter: blur(10px);
+        }
+
+        .form-box h3 {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            color: #8B0000;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+        }
+
+        .form-box input {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s ease;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        .form-box input:focus {
+            outline: none;
+            border-color: #8B0000;
+            background: rgba(139, 0, 0, 0.1);
+        }
+
+        .form-hint {
+            font-size: 0.8rem;
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            background: #8B0000;
+            border: 2px solid #8B0000;
+            color: #fff;
+            font-size: 0.9rem;
+            font-weight: 700;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background: #fff;
+            color: #8B0000;
+            transform: scale(1.02);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .response-message {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            text-align: center;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            animation: fadeInUp 0.3s ease;
+        }
+
+        .response-message.success {
+            color: #8B0000;
+            border: 1px solid #8B0000;
+            background: rgba(139, 0, 0, 0.1);
+        }
+
+        .response-message.error {
+            color: #ff4444;
+            border: 1px solid #ff4444;
+            background: rgba(255, 68, 68, 0.1);
+        }
     </style>
 </head>
 <body>
@@ -356,7 +449,26 @@
         <div class="cta-content">
             <h2>Ready to say NOPE to ordinary?</h2>
             <p>Join the rebellion. Embrace the chaos. Be unforgettable.</p>
-            <a href="#" class="cta-button">Gue Daftar, Anjir!</a>
+            <button class="cta-button" id="openFormBtn">Gue Daftar, Anjir!</button>
+            
+            <!-- Form Container (Hidden by default) -->
+            <div id="formContainer" class="form-container" style="display: none;">
+                <div class="form-box">
+                    <h3>Masuk List Sekarang!</h3>
+                    <form id="waitlistForm">
+                        <input 
+                            type="text" 
+                            id="telegramUsername" 
+                            placeholder="@username_telegram" 
+                            required
+                            pattern="^@[a-zA-Z0-9_]{5,32}$"
+                        >
+                        <p class="form-hint">Format: @username (5-32 karakter)</p>
+                        <button type="submit" class="submit-btn">SUBMIT</button>
+                    </form>
+                    <div id="responseMessage" class="response-message"></div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -417,6 +529,89 @@
 
         // Random glitch effect - REMOVED for clean look
         // No more random glitches on text
+
+        // Form handling
+        const openFormBtn = document.getElementById('openFormBtn');
+        const formContainer = document.getElementById('formContainer');
+        const waitlistForm = document.getElementById('waitlistForm');
+        const responseMessage = document.getElementById('responseMessage');
+
+        // GANTI INI DENGAN WEB APP URL KAMU DARI GOOGLE APPS SCRIPT!
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx5qm84d2kLLkXsthnF8FbJIYX354wZgUpToSvk6tgocnZrPPDQlAsRanONo4Fb9pt2/exec';
+
+        openFormBtn.addEventListener('click', () => {
+            formContainer.style.display = 'block';
+            formContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        });
+
+        waitlistForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const username = document.getElementById('telegramUsername').value.trim();
+            const submitBtn = waitlistForm.querySelector('.submit-btn');
+            
+            // Validate format
+            if (!username.startsWith('@')) {
+                showMessage('Username harus diawali dengan @', 'error');
+                return;
+            }
+
+            if (username.length < 6 || username.length > 33) {
+                showMessage('Username harus 5-32 karakter (setelah @)', 'error');
+                return;
+            }
+
+            // Disable button
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'LOADING...';
+
+            try {
+                // Get IP address (optional)
+                let ipAddress = 'N/A';
+                try {
+                    const ipResponse = await fetch('https://api.ipify.org?format=json');
+                    const ipData = await ipResponse.json();
+                    ipAddress = ipData.ip;
+                } catch (error) {
+                    console.log('Could not fetch IP');
+                }
+
+                // Send to Google Sheets
+                const response = await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        username: username,
+                        ip: ipAddress
+                    })
+                });
+
+                // With no-cors, we can't read the response, so assume success
+                showMessage('LO UDAH MASUK LIST! 🔥', 'success');
+                waitlistForm.reset();
+
+                // Hide form after 3 seconds
+                setTimeout(() => {
+                    formContainer.style.display = 'none';
+                }, 3000);
+
+            } catch (error) {
+                console.error('Error:', error);
+                showMessage('Ada masalah nih! Coba lagi.', 'error');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'SUBMIT';
+            }
+        });
+
+        function showMessage(message, type) {
+            responseMessage.textContent = message;
+            responseMessage.className = `response-message ${type}`;
+            responseMessage.style.display = 'block';
+        }
     </script>
 </body>
 </html>
