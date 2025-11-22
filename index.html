@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NOPE. - Fuck Ordinary</title>
+    <title>NOPE. - It's Our Time</title>
     <style>
         * {
             margin: 0;
@@ -23,7 +23,7 @@
         .cursor {
             width: 20px;
             height: 20px;
-            border: 2px solid #ff0055;
+            border: 2px solid #ffffff;
             border-radius: 50%;
             position: fixed;
             pointer-events: none;
@@ -35,7 +35,7 @@
         .cursor-follower {
             width: 40px;
             height: 40px;
-            border: 1px solid rgba(255, 0, 85, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.3);
             border-radius: 50%;
             position: fixed;
             pointer-events: none;
@@ -61,9 +61,9 @@
             width: 100%;
             height: 100%;
             background: 
-                linear-gradient(45deg, transparent 30%, rgba(255, 0, 85, 0.05) 50%, transparent 70%),
-                radial-gradient(circle at 20% 50%, rgba(138, 43, 226, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 50%, rgba(0, 255, 255, 0.1) 0%, transparent 50%);
+                linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.02) 50%, transparent 70%),
+                radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 80% 50%, rgba(255, 255, 255, 0.03) 0%, transparent 50%);
             animation: bgShift 10s ease infinite;
         }
 
@@ -91,11 +91,12 @@
 
         .tagline {
             font-size: clamp(1.2rem, 3vw, 2rem);
-            color: #888;
-            letter-spacing: 0.3em;
+            color: #666;
+            letter-spacing: 0.5em;
             text-transform: uppercase;
             margin-bottom: 3rem;
             animation: fadeInUp 1s ease 0.5s both;
+            font-weight: 300;
         }
 
         @keyframes fadeInUp {
@@ -112,9 +113,9 @@
         .cta-button {
             display: inline-block;
             padding: 1.5rem 4rem;
-            background: transparent;
-            border: 2px solid #ff0055;
-            color: #fff;
+            background: #ffffff;
+            border: 2px solid #ffffff;
+            color: #000;
             text-decoration: none;
             font-size: 1.2rem;
             font-weight: 700;
@@ -133,14 +134,14 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: #ff0055;
+            background: #000;
             transition: left 0.5s ease;
             z-index: -1;
         }
 
         .cta-button:hover {
-            color: #000;
-            border-color: #ff0055;
+            color: #fff;
+            border-color: #ffffff;
             transform: scale(1.05);
         }
 
@@ -165,13 +166,13 @@
             font-size: 0.8rem;
             letter-spacing: 0.2em;
             text-transform: uppercase;
-            color: #666;
+            color: #999;
         }
 
         .scroll-line {
             width: 2px;
             height: 50px;
-            background: linear-gradient(to bottom, #ff0055, transparent);
+            background: linear-gradient(to bottom, #ffffff, transparent);
             animation: scrollAnim 2s ease infinite;
         }
 
@@ -209,15 +210,15 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle, rgba(255, 0, 85, 0.1) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
             opacity: 0;
             transition: opacity 0.3s ease;
         }
 
         .feature-card:hover {
             transform: translateY(-10px);
-            border-color: #ff0055;
-            box-shadow: 0 20px 60px rgba(255, 0, 85, 0.3);
+            border-color: #ffffff;
+            box-shadow: 0 20px 60px rgba(255, 255, 255, 0.15);
         }
 
         .feature-card:hover::before {
@@ -306,7 +307,7 @@
         <div class="glitch-bg"></div>
         <div class="hero-content">
             <h1>NOPE.</h1>
-            <p class="tagline">Fuck Ordinary</p>
+            <p class="tagline">It's Our Time</p>
             <a href="#features" class="cta-button">Explore</a>
         </div>
         <div class="scroll-indicator">
@@ -354,7 +355,7 @@
         <div class="cta-content">
             <h2>Ready to say NOPE to ordinary?</h2>
             <p>Join the rebellion. Embrace the chaos. Be unforgettable.</p>
-            <a href="#" class="cta-button">Let's fucking go</a>
+            <a href="#" class="cta-button">Gue Daftar, Anjir!</a>
         </div>
     </section>
 
@@ -378,11 +379,11 @@
         links.forEach(link => {
             link.addEventListener('mouseenter', () => {
                 cursor.style.transform = 'scale(1.5)';
-                cursor.style.borderColor = '#00ffff';
+                cursor.style.borderColor = '#ffffff';
             });
             link.addEventListener('mouseleave', () => {
                 cursor.style.transform = 'scale(1)';
-                cursor.style.borderColor = '#ff0055';
+                cursor.style.borderColor = '#ffffff';
             });
         });
 
@@ -413,15 +414,8 @@
             });
         });
 
-        // Random glitch effect
-        setInterval(() => {
-            if (Math.random() > 0.95) {
-                document.querySelector('h1').style.animation = 'none';
-                setTimeout(() => {
-                    document.querySelector('h1').style.animation = 'glitchText 5s infinite';
-                }, 50);
-            }
-        }, 3000);
+        // Random glitch effect - REMOVED for clean look
+        // No more random glitches on text
     </script>
 </body>
 </html>
