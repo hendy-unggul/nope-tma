@@ -85,46 +85,8 @@
             letter-spacing: -0.05em;
             margin-bottom: 1rem;
             position: relative;
-            animation: glitchText 5s infinite;
-        }
-
-        h1::before,
-        h1::after {
-            content: 'NOPE.';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-
-        h1::before {
-            color: #ff0000;
-            animation: glitch1 3s infinite;
-            clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
-        }
-
-        h1::after {
-            color: #000000;
-            animation: glitch2 3s infinite;
-            clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
-            text-shadow: 2px 2px 0 #ff0000;
-        }
-
-        @keyframes glitch1 {
-            0%, 100% { transform: translate(0); }
-            20% { transform: translate(-3px, 3px); }
-            40% { transform: translate(-3px, -3px); }
-            60% { transform: translate(3px, 3px); }
-            80% { transform: translate(3px, -3px); }
-        }
-
-        @keyframes glitch2 {
-            0%, 100% { transform: translate(0); }
-            20% { transform: translate(3px, -3px); }
-            40% { transform: translate(3px, 3px); }
-            60% { transform: translate(-3px, -3px); }
-            80% { transform: translate(-3px, 3px); }
+            color: #ffffff;
+            text-shadow: 0 0 80px rgba(255, 255, 255, 0.3);
         }
 
         .tagline {
@@ -344,7 +306,7 @@
         <div class="glitch-bg"></div>
         <div class="hero-content">
             <h1>NOPE.</h1>
-            <p class="tagline">It's our time</p>
+            <p class="tagline">Fuck Ordinary</p>
             <a href="#features" class="cta-button">Explore</a>
         </div>
         <div class="scroll-indicator">
@@ -392,7 +354,7 @@
         <div class="cta-content">
             <h2>Ready to say NOPE to ordinary?</h2>
             <p>Join the rebellion. Embrace the chaos. Be unforgettable.</p>
-            <a href="#" class="cta-button">Gue daftar, Anjir!</a>
+            <a href="#" class="cta-button">Let's fucking go</a>
         </div>
     </section>
 
